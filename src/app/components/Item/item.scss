@@ -1,0 +1,8 @@
+@import "../../vairable";
+
+.board-item {
+  cursor: pointer;
+  &:hover {
+    background-color: $color-light-gray;
+  }
+}

@@ -1,0 +1,9 @@
+@import "../../vairable";
+
+.sidebar {
+  background-color: $color-light-gray;
+  @media screen and (min-width: $breakpoint-md) {
+    width: 250px;
+  }
+};
+
