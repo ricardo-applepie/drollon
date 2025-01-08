@@ -1,0 +1,14 @@
+@import "../../vairable";
+
+.group {
+  h3 {
+    font-weight: 600;
+  }
+  &-title {
+    background-color: $color-light-gray;
+  }
+}
+
+.board-name { 
+  font-weight: 600;  
+}
