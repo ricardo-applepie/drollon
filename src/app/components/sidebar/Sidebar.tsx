@@ -9,9 +9,11 @@ import { useAppSelector } from "@/store/store";
 import "./sidebar.scss";
 
 import PopUpModal from "../popup/Popupmodal";
+import { useDispatch } from "react-redux";
+import { setBoards } from "@/app/redux/board/board";
 
 const sideNav = [
-  { id: 1, name: "Home", link: "/" },
+  { id: 1, name: "Home", link: "/", svg: "/home.svg" },
   { id: 2, name: "Search", type: "input" },
 ];
 
@@ -21,22 +23,26 @@ const sideNav1 = [
 ];
 
 export default function Sidebar() {
-  const [boards, setBoards] = useState([]);
-  const pathname = usePathname(); // ✅ Get the current path
-  const authState = useAppSelector((state) => state);
-  console.log(authState, "authState");
+  const pathname = usePathname(); // 
+  const { boards } = useAppSelector((state: any) => state?.boardInfo);
+
+  const dispatch = useDispatch();
 
   // Extract the boardId from the path
   const boardId = pathname.split("/")[2];
 
   useEffect(() => {
+    const authToken = localStorage.getItem("authToken") || "";
     const fetch = async () => {
-      const boards = await getData("/api/v1/boards");
-      setBoards(boards);
+      const boards = await getData("/api/v1/boards", authToken);
+      dispatch(setBoards(boards));
     };
     fetch();
   }, []);
 
+  if(false) {
+   return null
+  } 
   return (
     <nav className="px-3 h-full flex flex-col justify-between sidebar min-w-52">
       <div>
@@ -58,10 +64,10 @@ export default function Sidebar() {
             ) : (
               <Link className="flex gap-3" href={sub.link || "/"}>
                 <Image
-                  src="/file.svg"
+                  src={sub?.svg || "/file.svg"}
                   alt="File icon"
-                  width={16}
-                  height={16}
+                  width={18}
+                  height={18}
                   priority
                 />
                 <div>{sub.name}</div>
@@ -69,7 +75,8 @@ export default function Sidebar() {
             )}
           </div>
         ))}
-        {boards &&
+        <div className="sidebar__boards my-4">
+          {boards &&
           boards?.map((board: any) => (
             <div className={`mt-2 py-1 pl-1 ${`${board.boardId}` === boardId ? 'active' : ''}`} key={board.boardId}>
               <Link className={`flex gap-3`} href={`/boards/${board.boardId}`}>
@@ -84,6 +91,8 @@ export default function Sidebar() {
               </Link>
             </div>
           ))}
+        </div>
+
       </div>
 
       <div>

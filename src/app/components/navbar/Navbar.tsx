@@ -4,19 +4,32 @@
 import Image from "next/image";
 import "./navbar.scss";
 import Link from "next/link";
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from "react";
 
 const navData = [1, 2,3,4,5];
 
 interface NavbarProps {
-  isLoggedIn: boolean;
+
 }
 
 export default function Navbar(props: NavbarProps ) {
-  const { isLoggedIn } = props;
   const pathname = usePathname();
   const isLoginPage = pathname === "/login";
-  
+  const router = useRouter();
+  const authToken = localStorage.getItem("authToken");
+
+  const hanldeLogout = () => {
+    localStorage.removeItem("authToken");
+    router.push('/login');
+  }
+
+  useEffect(() => {
+    if(!authToken) {
+      router.push('/login');
+    }
+  }, []);
+
   return (
     <div className="flex justify-between px-3 py-7 navbar">
       <div className="w-1/3 font-semibold text-2xl">
@@ -24,7 +37,7 @@ export default function Navbar(props: NavbarProps ) {
       </div>
       <div> 
         <div className="flex justify-between gap-6">
-          {!isLoggedIn && (
+          {!authToken && (
             <div>
               <span>{isLoginPage ?  "Don't have an account?" : "Already playing with Drollon?"}</span> 
               <span className="ml-4"> 
@@ -37,7 +50,7 @@ export default function Navbar(props: NavbarProps ) {
               </span>
             </div>
           )}
-          {isLoggedIn && navData.map((nav, key) => (
+          {authToken && navData.map((nav, key) => (
             <Image
               key={`image_${key}`}
               src={key !== 2 ? "/file.svg" : "/notifications.svg"}
@@ -46,6 +59,14 @@ export default function Navbar(props: NavbarProps ) {
               height={20}
             />
           ))}
+          {authToken && (
+            <span 
+              onClick={hanldeLogout}
+              className="cursor-pointer"
+            >
+              logout
+            </span>
+          )}
         </div>
       </div>
     </div>

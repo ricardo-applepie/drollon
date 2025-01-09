@@ -4,9 +4,7 @@ import Image from "next/image";
 import { StoreProvider } from "@/store/storeProvider";
 import "./globals.scss";
 
-import Sidebar from "./components/sidebar/Sidebar";
 import Navbar from "./components/navbar/Navbar";
-import RecentBoards from "./components/recentboards/RecentBoards";
 
 
 const geistSans = localFont({
@@ -30,22 +28,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-   const isLoggedIn = false;
-
   return (
     <StoreProvider>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
         >
-          <Navbar isLoggedIn={isLoggedIn}/>
+          <Navbar />
           <div className="flex flex-row w-full layout">
             <div className="flex w-full h-full">
-              {isLoggedIn && (<Sidebar />)}
               {children}
             </div>
           </div>
-          {!isLoggedIn && (
+          {false && (
             <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
               <a
                 className="flex items-center gap-2 hover:underline hover:underline-offset-4"

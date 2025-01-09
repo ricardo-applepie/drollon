@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import ActiveBoard from "@/app/components/activeBoard/ActiveBoard";
 import QuillInitEditor from "@/app/components/quillEditor/quilEditorInit";
 import QuillEditor from "@/app/components/quillEditor/quillEditor";
+import Sidebar from "@/app/components/sidebar/Sidebar";
 
 
 export default function Home() {
@@ -26,7 +27,8 @@ export default function Home() {
     }
   }
   const fetchItem = async () => {
-    const item = await getData(`/api/v1/item?itemId=${itemId}`)
+    const authToken = localStorage.getItem("authToken");
+    const item = await getData(`/api/v1/item?itemId=${itemId}`, authToken )
     setItem(item);
   }
 
@@ -35,17 +37,20 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col h-full w-full px-16 pb-5 mt-5 overflow-y-scroll">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full">
-        <div className="w-full">
-          <h2 className="text-xl mb-4">{name}</h2>
-          <QuillInitEditor />
-          <h2>Comments</h2>
-          <QuillEditor 
-            hideBtn={true}
-          /> 
-        </div>
-      </main>
-    </div>
+    <>
+      <Sidebar />
+      <div className="flex flex-col h-full w-full px-16 pb-5 mt-5 overflow-y-scroll">
+        <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start w-full">
+          <div className="w-full">
+            <h2 className="text-xl mb-4">{name}</h2>
+            <QuillInitEditor />
+            <h2>Comments</h2>
+            <QuillEditor 
+              hideBtn={true}
+            /> 
+          </div>
+        </main>
+      </div>
+    </>
   );
 }

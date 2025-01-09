@@ -1,13 +1,17 @@
+import { useState } from "react";
+
 // utils.ts
 const backendUrl = "http://localhost:4000";
+const authTokenBrowser = localStorage.getItem("authToken");
 
 // Generic GET request function
-export async function getData(url: string) {
+export async function getData(url: string, authToken?: string | null) {
   try {
     const response = await fetch(backendUrl+url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        'Authorization': `${authToken}`, // Add JWT token to Authorization header
       },
     });
 
@@ -16,7 +20,6 @@ export async function getData(url: string) {
     }
 
     const data = await response.json();
-    console.log(data);
 
     return data;
   } catch (error) {
@@ -26,12 +29,14 @@ export async function getData(url: string) {
 }
 
 // Generic POST request function
-export async function postData(url: string, body: object) {
+export async function postData(url: string, body: object, authToken: string | null) {
+
   try {
     const response = await fetch(backendUrl+url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        'Authorization': `${authTokenBrowser}`, // Add JWT token to Authorization header
       },
       body: JSON.stringify(body),
     });

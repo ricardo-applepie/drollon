@@ -1,7 +1,7 @@
 "use client";
 
 import { Group } from "@/app/boards/[id]/page";
-import { updateGroups, updateItems } from "@/app/redux/board/board";
+import { setBoards, updateGroups, updateItems } from "@/app/redux/board/board";
 import { postData } from "@/utils/utils";
 import { useParams } from "next/navigation";
 import React, { useState, useEffect, useState as useReactState } from "react";
@@ -29,13 +29,15 @@ const PopUpModal = (props : PopUpModalProps) => {
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+    const authToken = localStorage.getItem("authToken");
 
     switch (props.type) {
       case "addBoard":
-        postData("/api/v1/boards", { boardName: boardName } )
+        const boards = await postData("/api/v1/boards", { boardName: boardName } , authToken);
+        dispatch(setBoards(boards));
         break;
       case "addCollection":
-        const groups = await postData("/api/v1/groups", { groupName: boardName, boardId: id });
+        const groups = await postData("/api/v1/groups", { groupName: boardName, boardId: id }, authToken);
         dispatch(updateGroups(groups));
 
         break;

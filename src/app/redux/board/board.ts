@@ -3,7 +3,9 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 
 const initialState: any = {
-  boardDetail: {}
+  boards: [],
+  boardDetail: {
+  }
 };
 
 export const boardSlice = createSlice({
@@ -12,6 +14,9 @@ export const boardSlice = createSlice({
   reducers: {
     setBoard: (state, action: PayloadAction<any>) => {
       state.boardDetail = action.payload;
+    },
+    setBoards: (state, action: PayloadAction<any>) => {
+      state.boards = action.payload;
     },
     updateGroups: (state, action: PayloadAction<any>) => {
       state.boardDetail.groups = action.payload.groups;
@@ -22,5 +27,5 @@ export const boardSlice = createSlice({
   },
 });
 
-export const { setBoard, updateGroups, updateItems } = boardSlice.actions;
+export const { setBoard, updateGroups, updateItems, setBoards } = boardSlice.actions;
 export const boardReducer = boardSlice.reducer;
