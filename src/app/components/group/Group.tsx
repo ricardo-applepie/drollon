@@ -22,6 +22,7 @@ export default function Group(props: GroupProps) {
   const [taskname, setTaskname] = useState("");
   const dispatch = useDispatch();
   const { id } = useParams();
+  const authToken = localStorage.getItem('authToken');
 
   const handleBlur = async () => {
     if (!taskname) return;
@@ -32,7 +33,7 @@ export default function Group(props: GroupProps) {
       groupId: groupId,
       boardId: Number(id),
       itemName: taskname,
-    });
+    }, authToken);
     dispatch(updateGroups(itemGroups)); 
     setTaskname("");
   };
