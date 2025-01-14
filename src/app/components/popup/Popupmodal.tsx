@@ -29,14 +29,16 @@ const PopUpModal = (props : PopUpModalProps) => {
 
   const handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const authToken = localStorage.getItem("authToken");
+    const authToken = typeof window !== 'undefined' && window.localStorage.getItem("authToken");
 
     switch (props.type) {
       case "addBoard":
+        if(!authToken) return;
         const boards = await postData("/api/v1/boards", { boardName: boardName } , authToken);
         dispatch(setBoards(boards));
         break;
       case "addCollection":
+        if(!authToken) return;
         const groups = await postData("/api/v1/groups", { groupName: boardName, boardId: id }, authToken);
         dispatch(updateGroups(groups));
 

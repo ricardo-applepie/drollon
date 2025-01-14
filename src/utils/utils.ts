@@ -2,7 +2,6 @@ import { useState } from "react";
 
 // utils.ts
 const backendUrl = "http://localhost:4000";
-const authTokenBrowser = localStorage.getItem("authToken");
 
 // Generic GET request function
 export async function getData(url: string, authToken?: string | null) {
@@ -36,7 +35,7 @@ export async function postData(url: string, body: object, authToken: string | nu
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        'Authorization': `${authTokenBrowser}`, // Add JWT token to Authorization header
+        'Authorization': `${authToken}`, // Add JWT token to Authorization header
       },
       body: JSON.stringify(body),
     });

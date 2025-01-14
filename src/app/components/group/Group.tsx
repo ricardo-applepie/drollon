@@ -22,20 +22,22 @@ export default function Group(props: GroupProps) {
   const [taskname, setTaskname] = useState("");
   const dispatch = useDispatch();
   const { id } = useParams();
-  const authToken = localStorage.getItem('authToken');
+  const authToken = typeof window !== "undefined" && window.localStorage.getItem('authToken');
 
   const handleBlur = async () => {
     if (!taskname) return;
 
     // Add the task first
     const { groupId } = props.group;
-    const itemGroups = await postData("/api/v1/item", {
-      groupId: groupId,
-      boardId: Number(id),
-      itemName: taskname,
-    }, authToken);
-    dispatch(updateGroups(itemGroups)); 
-    setTaskname("");
+    if(authToken) {
+      const itemGroups = await postData("/api/v1/item", {
+        groupId: groupId,
+        boardId: Number(id),
+        itemName: taskname,
+      }, authToken);
+      dispatch(updateGroups(itemGroups)); 
+      setTaskname("");
+    }
   };
 
   const handleChange = (event: any) => {

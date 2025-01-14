@@ -17,10 +17,10 @@ export default function Navbar(props: NavbarProps ) {
   const pathname = usePathname();
   const isLoginPage = pathname === "/login";
   const router = useRouter();
-  const authToken = localStorage.getItem("authToken");
+  const authToken = typeof window !== "undefined" && window.localStorage.getItem("authToken");
 
-  const hanldeLogout = () => {
-    localStorage.removeItem("authToken");
+  const handleLogout = () => {
+    window.localStorage.removeItem("authToken");
     router.push('/login');
   }
 
@@ -61,7 +61,7 @@ export default function Navbar(props: NavbarProps ) {
           ))}
           {authToken && (
             <span 
-              onClick={hanldeLogout}
+              onClick={handleLogout}
               className="cursor-pointer"
             >
               logout

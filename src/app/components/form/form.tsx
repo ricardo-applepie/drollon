@@ -46,15 +46,17 @@ export default function Form(props: FormProps) {
     const endpoint = isLogin ? "/api/v1/login" : "/api/v1/signup";
     setLoading(true)
     try {
-      const authToken = localStorage.getItem("authToken");
-
-      const response = await postData(endpoint, formData, authToken);
-      
-      if(response.token) {
-        localStorage.setItem("authToken", response.token);
-        router.push('/');
+      const authToken = typeof window !== "undefined" && window.localStorage.getItem("authToken");
+      if(authToken) {
+        const response = await postData(endpoint, formData, authToken);
+        
+        if(response.token) {
+          window.localStorage.setItem("authToken", response.token);
+          router.push('/');
+        }
+        setLoading(false);
       }
-      setLoading(false);
+
     } catch (error) {
       setLoading(false)
     }

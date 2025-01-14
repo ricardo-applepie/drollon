@@ -32,10 +32,12 @@ export default function Sidebar() {
   const boardId = pathname.split("/")[2];
 
   useEffect(() => {
-    const authToken = localStorage.getItem("authToken") || "";
+    const authToken = typeof window !== 'undefined' && window.localStorage.getItem("authToken") || "";
     const fetch = async () => {
-      const boards = await getData("/api/v1/boards", authToken);
-      dispatch(setBoards(boards));
+      if(authToken) {
+        const boards = await getData("/api/v1/boards", authToken);
+        dispatch(setBoards(boards));
+      }
     };
     fetch();
   }, []);

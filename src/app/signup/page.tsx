@@ -8,7 +8,7 @@ import './signUp.scss';
 
 export default function SignUp() {
     const router = useRouter();
-    const authToken = localStorage.getItem("authToken");
+    const authToken = typeof window !== 'undefined' && window.localStorage.getItem("authToken");
   
     useEffect(() => {
       if(authToken) {

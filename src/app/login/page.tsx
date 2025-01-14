@@ -8,7 +8,7 @@ import './login.scss';
 
 export default function Login() {
   const router = useRouter();
-  const authToken = localStorage.getItem("authToken");
+  const authToken = typeof window !== 'undefined' && window.localStorage.getItem("authToken");
 
   useEffect(() => {
     if(authToken) {
