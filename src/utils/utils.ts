@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // utils.ts
-const backendUrl = "http://localhost:4000";
+const backendUrl = "https://drollonbackend.onrender.com";
 
 // Generic GET request function
 export async function getData(url: string, authToken?: string | null) {
@@ -28,7 +28,7 @@ export async function getData(url: string, authToken?: string | null) {
 }
 
 // Generic POST request function
-export async function postData(url: string, body: object, authToken: string | null) {
+export async function postData(url: string, body: object, authToken?: string | null) {
 
   try {
     const response = await fetch(backendUrl+url, {

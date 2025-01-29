@@ -44,18 +44,14 @@ export default function Form(props: FormProps) {
   // Handle form submission
   const handleSubmit = async () => {
     const endpoint = isLogin ? "/api/v1/login" : "/api/v1/signup";
-    setLoading(true)
     try {
-      const authToken = typeof window !== "undefined" && window.localStorage.getItem("authToken");
-      if(authToken) {
-        const response = await postData(endpoint, formData, authToken);
+        const response = await postData(endpoint, formData);
         
         if(response.token) {
           window.localStorage.setItem("authToken", response.token);
           router.push('/');
         }
         setLoading(false);
-      }
 
     } catch (error) {
       setLoading(false)
@@ -157,7 +153,6 @@ export default function Form(props: FormProps) {
             >
               {isLogin ? "Log In" : "Sign Up"}
             </button>
-            {loading && "loading"}
             {isLogin && (
               <Link
                 className="text-black inline-block mt-4 text-center align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
