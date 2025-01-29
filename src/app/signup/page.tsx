@@ -11,7 +11,7 @@ export default function SignUp() {
     const authToken = typeof window !== 'undefined' && window.localStorage.getItem("authToken");
   
     useEffect(() => {
-      if(authToken) {
+      if (authToken) {
         router.push('/');
       } 
     }, []);

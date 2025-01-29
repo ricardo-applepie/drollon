@@ -47,10 +47,10 @@ export default function Form(props: FormProps) {
     setLoading(true);
     try {
         const response = await postData(endpoint, formData);
-        if(response && !isLogin) {
+        if (response && !isLogin) {
           router.push('/login');
         }
-        if(response.token) {
+        if (response.token) {
           window.localStorage.setItem("authToken", response.token);
           router.push('/');
         }

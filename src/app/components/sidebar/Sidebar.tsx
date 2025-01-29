@@ -34,7 +34,7 @@ export default function Sidebar() {
   useEffect(() => {
     const authToken = typeof window !== 'undefined' && window.localStorage.getItem("authToken") || "";
     const fetch = async () => {
-      if(authToken) {
+      if (authToken) {
         const boards = await getData("/api/v1/boards", authToken);
         dispatch(setBoards(boards));
       }
@@ -42,7 +42,7 @@ export default function Sidebar() {
     fetch();
   }, []);
 
-  if(false) {
+  if (false) {
    return null
   } 
   return (

@@ -29,7 +29,7 @@ export default function Group(props: GroupProps) {
 
     // Add the task first
     const { groupId } = props.group;
-    if(authToken) {
+    if (authToken) {
       const itemGroups = await postData("/api/v1/item", {
         groupId: groupId,
         boardId: Number(id),

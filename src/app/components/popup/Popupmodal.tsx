@@ -33,12 +33,12 @@ const PopUpModal = (props : PopUpModalProps) => {
 
     switch (props.type) {
       case "addBoard":
-        if(!authToken) return;
+        if (!authToken) return;
         const boards = await postData("/api/v1/boards", { boardName: boardName } , authToken);
         dispatch(setBoards(boards));
         break;
       case "addCollection":
-        if(!authToken) return;
+        if (!authToken) return;
         const groups = await postData("/api/v1/groups", { groupName: boardName, boardId: id }, authToken);
         dispatch(updateGroups(groups));
 

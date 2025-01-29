@@ -40,7 +40,7 @@ export default function BoardDetail() {
   useEffect(() => {
     const fetch = async () => {
       const authToken = typeof window !== "undefined" && window.localStorage.getItem("authToken");
-      if(authToken) {
+      if (authToken) {
         const boardData: BoardResponse = await getData(`/api/v1/items?boardId=${id}`, authToken);
         dispatch(setBoard(boardData));
         setBoardData(boardData);

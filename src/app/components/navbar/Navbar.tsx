@@ -25,7 +25,7 @@ export default function Navbar(props: NavbarProps ) {
   }
 
   useEffect(() => {
-    if(!authToken) {
+    if (!authToken) {
       router.push('/login');
     }
   }, []);

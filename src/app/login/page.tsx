@@ -11,7 +11,7 @@ export default function Login() {
   const authToken = typeof window !== 'undefined' && window.localStorage.getItem("authToken");
 
   useEffect(() => {
-    if(authToken) {
+    if (authToken) {
       router.push('/');
     } 
   }, []);

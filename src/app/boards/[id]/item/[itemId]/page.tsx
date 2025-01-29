@@ -28,7 +28,7 @@ export default function Home() {
   }
   const fetchItem = async () => {
     const authToken = typeof window !== "undefined" && window.localStorage.getItem("authToken");
-    if(authToken) {
+    if (authToken) {
       const item = await getData(`/api/v1/item?itemId=${itemId}`, authToken )
       setItem(item);
     }
