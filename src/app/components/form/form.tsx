@@ -44,9 +44,12 @@ export default function Form(props: FormProps) {
   // Handle form submission
   const handleSubmit = async () => {
     const endpoint = isLogin ? "/api/v1/login" : "/api/v1/signup";
+    setLoading(true);
     try {
         const response = await postData(endpoint, formData);
-        
+        if(response && !isLogin) {
+          router.push('/login');
+        }
         if(response.token) {
           window.localStorage.setItem("authToken", response.token);
           router.push('/');
@@ -153,6 +156,7 @@ export default function Form(props: FormProps) {
             >
               {isLogin ? "Log In" : "Sign Up"}
             </button>
+            {loading && <div>loading...</div>}
             {isLogin && (
               <Link
                 className="text-black inline-block mt-4 text-center align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
